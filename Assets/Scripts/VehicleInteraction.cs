@@ -1,5 +1,6 @@
 using StarterAssets;
 using Unity.Cinemachine;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -26,11 +27,14 @@ public class VehicleInteraction : MonoBehaviour
     [Tooltip("Exclude the Player layer from this mask.")]
     [SerializeField] private LayerMask interactionLayers = ~0;
 
-    private CarController currentCar;
-    private float nextAllowedInteractionTime;
+    private CarController _currentCar;
+    private float _nextAllowedInteractionTime;
+    private NetworkObject _networkObject;
 
     private void Awake()
     {
+        _networkObject = GetComponent<NetworkObject>();
+
         if (playerMovement == null)
         {
             playerMovement =
@@ -45,13 +49,23 @@ public class VehicleInteraction : MonoBehaviour
 
         if (playerCamera == null)
         {
+            playerCamera = GetComponentInChildren<Camera>(true);
+        }
+
+        if (playerCamera == null)
+        {
             playerCamera = Camera.main;
         }
     }
 
     private void Update()
     {
-        if (Time.time < nextAllowedInteractionTime)
+        if (!IsLocalPlayer)
+        {
+            return;
+        }
+
+        if (Time.time < _nextAllowedInteractionTime)
         {
             return;
         }
@@ -66,7 +80,7 @@ public class VehicleInteraction : MonoBehaviour
             return;
         }
 
-        if (currentCar != null)
+        if (_currentCar != null)
         {
             ExitCar();
         }
@@ -145,8 +159,8 @@ public class VehicleInteraction : MonoBehaviour
             return;
         }
 
-        currentCar = car;
-        nextAllowedInteractionTime = Time.time + 0.3f;
+        _currentCar = car;
+        _nextAllowedInteractionTime = Time.time + 0.3f;
 
         if (playerMovement != null)
         {
@@ -182,7 +196,7 @@ public class VehicleInteraction : MonoBehaviour
 
     private void ExitCar()
     {
-        CarController carBeingExited = currentCar;
+        CarController carBeingExited = _currentCar;
 
         if (carBeingExited == null)
         {
@@ -199,7 +213,7 @@ public class VehicleInteraction : MonoBehaviour
             return;
         }
 
-        currentCar = null;
+        _currentCar = null;
 
         carBeingExited.SetDriver(false);
 
@@ -228,6 +242,9 @@ public class VehicleInteraction : MonoBehaviour
             playerFollowCamera.gameObject.SetActive(true);
         }
 
-        nextAllowedInteractionTime = Time.time + 0.3f;
+        _nextAllowedInteractionTime = Time.time + 0.3f;
     }
+
+    private bool IsLocalPlayer =>
+        _networkObject == null || !_networkObject.IsSpawned || _networkObject.IsOwner;
 }

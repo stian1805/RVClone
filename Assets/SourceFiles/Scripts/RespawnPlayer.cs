@@ -1,5 +1,6 @@
 using UnityEngine;
 using Unity.Cinemachine;
+using Unity.Netcode;
 
 namespace StarterAssets
 {
@@ -14,6 +15,7 @@ namespace StarterAssets
         private Quaternion _startingRotation;
 
         private CharacterController _characterController;
+        private NetworkObject _networkObject;
 
         public CinemachineCamera vCam;
 
@@ -29,6 +31,7 @@ namespace StarterAssets
 
     // Get the CharacterController reference
     _characterController = GetComponent<CharacterController>();
+    _networkObject = GetComponent<NetworkObject>();
     if (_characterController == null)
     {
         Debug.LogError("CharacterController component is required for RespawnPlayer script!");
@@ -44,6 +47,11 @@ namespace StarterAssets
 
         private void Update()
         {
+            if (!IsLocalPlayer)
+            {
+                return;
+            }
+
             // Check if the player's Y position has fallen below the threshold
             if (transform.position.y < yThreshold)
             {
@@ -53,6 +61,11 @@ namespace StarterAssets
 
         private void Respawn()
 {
+    if (!IsLocalPlayer)
+    {
+        return;
+    }
+
     // Disable the CharacterController so we can manually adjust position
     if (_characterController != null)
     {
@@ -60,41 +73,26 @@ namespace StarterAssets
     }
 
     // Reset the player's position and rotation
-    transform.position = _startingPosition;
-    transform.rotation = Quaternion.Euler(0f, 90f, 0f); // Reset player Y rotation to 90 degrees
+    transform.SetPositionAndRotation(_startingPosition, _startingRotation);
 
     // Reset the CharacterController's vertical velocity to ensure the robot doesn't keep falling
     if (_characterController != null)
     {
         _characterController.enabled = true; // Enable it back after resetting position
-        ResetVerticalVelocity();
     }
 
     // Reset the camera's rotation
-    ThirdPersonController thirdPersonController = GetComponent<ThirdPersonController>();
-    if (thirdPersonController != null)
+    if (_thirdPersonController != null)
     {
-        thirdPersonController.ResetCameraRotation(90f); // Reset camera's Y rotation to 90 degrees
+        _thirdPersonController.ResetVerticalVelocity();
+        _thirdPersonController.ResetCameraRotation(_startingRotation.eulerAngles.y); // Reset camera to the saved spawn yaw
     }
 
     AudioSource.PlayClipAtPoint(respawnSound, transform.position);
 
 }
 
-        private void ResetVerticalVelocity()
-        {
-            // Ensures no residual vertical velocity after respawning
-            if (TryGetComponent<ThirdPersonController>(out ThirdPersonController controller))
-            {
-                // Access the private _verticalVelocity via the public interface, if exposed
-                var verticalVelocityField = typeof(ThirdPersonController).GetField("_verticalVelocity",
-                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-
-                if (verticalVelocityField != null)
-                {
-                    verticalVelocityField.SetValue(controller, 0f);
-                }
-            }
-        }
+        private bool IsLocalPlayer =>
+            _networkObject == null || !_networkObject.IsSpawned || _networkObject.IsOwner;
     }
 }
