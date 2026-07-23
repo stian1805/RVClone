@@ -519,8 +519,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7736108665850884707}
   - component: {fileID: 7136919530340960635}
-  - component: {fileID: 7065969668460660970}
   - component: {fileID: -6641122975322354137}
+  - component: {fileID: 6172019248357043384}
   m_Layer: 0
   m_Name: PlayerRobot
   m_TagString: Player
@@ -558,7 +558,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 2849288448
+  GlobalObjectIdHash: 203852909
   InScenePlacedSourceGlobalObjectIdHash: 203852909
   DeferredDespawnTick: 0
   Ownership: 1
@@ -572,7 +572,7 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
---- !u!114 &7065969668460660970
+--- !u!114 &-6641122975322354137
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -581,9 +581,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 1804703078109025515}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Script: {fileID: 11500000, guid: e4b4f47f6a96a3a4fa03e88c30c54921, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.Components.NetworkTransform
+  m_EditorClassIdentifier: Assembly-CSharp::VehicleInteraction
+  playerCamera: {fileID: 9017485172064717998}
+  playerFollowCamera: {fileID: 6712355593683709296}
+  playerMovement: {fileID: 2563429732134213952}
+  characterController: {fileID: 8296376290313619657}
+  playerVisuals: {fileID: 5633379113638269974}
+  interactionDistance: 10
+  interactionLayers:
+    serializedVersion: 2
+    m_Bits: 55
+--- !u!114 &6172019248357043384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804703078109025515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da52bf8bbc1de48cfb221a6ff30f7972, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Multiplayer.Center.NetcodeForGameObjectsExample::Unity.Multiplayer.Center.NetcodeForGameObjectsExample.ClientNetworkTransform
   ShowTopMostFoldoutHeaderGroup: 1
   NetworkTransformExpanded: 0
   AutoOwnerAuthorityTickOffset: 1
@@ -618,27 +639,6 @@ MonoBehaviour:
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
---- !u!114 &-6641122975322354137
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1804703078109025515}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4b4f47f6a96a3a4fa03e88c30c54921, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::VehicleInteraction
-  playerCamera: {fileID: 9017485172064717998}
-  playerFollowCamera: {fileID: 6712355593683709296}
-  playerMovement: {fileID: 2563429732134213952}
-  characterController: {fileID: 8296376290313619657}
-  playerVisuals: {fileID: 5633379113638269974}
-  interactionDistance: 10
-  interactionLayers:
-    serializedVersion: 2
-    m_Bits: 55
 --- !u!1 &1833995220940253086
 GameObject:
   m_ObjectHideFlags: 0
