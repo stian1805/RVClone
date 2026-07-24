@@ -1,8 +1,9 @@
 using Unity.Cinemachine;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CarController : MonoBehaviour
+public class CarController : NetworkBehaviour
 {
     [Header("Entry")]
     [SerializeField] private Transform driverSeat;
