@@ -11,10 +11,23 @@ public class PlayerMovement : NetworkBehaviour
     [SerializeField] private float gravity = -20f;
 
     private Vector3 velocity;
+    
+    [SerializeField] private Transform cameraPivot; // Assign your Camera or a pivot object
+    [SerializeField] private float lookSpeed = 120f;
+    [SerializeField] private float minLookAngle = -80f;
+    [SerializeField] private float maxLookAngle = 80f;
+
+    private float xRotation = 0f;
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
+
+        if (IsOwner)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
     }
 
     void Update()
@@ -73,9 +86,51 @@ public class PlayerMovement : NetworkBehaviour
     private void Turn()
     {
         float mouseX = Input.GetAxis("Mouse X");
+        float mouseY = Input.GetAxis("Mouse Y");
 
-        transform.Rotate(
-            Vector3.up * mouseX * turnSpeed * Time.deltaTime
-        );
+        // Rotate player left/right
+        transform.Rotate(Vector3.up * mouseX * turnSpeed * Time.deltaTime);
+
+        // Rotate camera up/down
+        xRotation -= mouseY * lookSpeed * Time.deltaTime;
+        xRotation = Mathf.Clamp(xRotation, minLookAngle, maxLookAngle);
+
+        cameraPivot.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
     }
+    
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (!IsOwner)
+            return;
+
+        Rigidbody rb = hit.collider.attachedRigidbody;
+
+        if (rb == null)
+            return;
+
+        NetworkObject networkObject = rb.GetComponent<NetworkObject>();
+
+        if (networkObject == null)
+            return;
+
+        Vector3 pushDirection = hit.moveDirection;
+        pushDirection.y = 0; // Don't launch objects upward
+
+        PushObjectServerRpc(networkObject.NetworkObjectId, pushDirection);
+    }
+    
+    [ServerRpc]
+    private void PushObjectServerRpc(ulong objectId, Vector3 direction)
+    {
+        if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(objectId, out NetworkObject obj))
+        {
+            Rigidbody rb = obj.GetComponent<Rigidbody>();
+
+            if (rb != null)
+            {
+                rb.AddForce(direction.normalized * 20f, ForceMode.Force);
+            }
+        }
+    }
+    
 }
