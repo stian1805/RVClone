@@ -6,7 +6,7 @@ public class PlayerMovement : NetworkBehaviour
     private CharacterController controller;
 
     [SerializeField] private float moveSpeed = 4f;
-    [SerializeField] private float turnSpeed = 40f;
+    [SerializeField] private float turnSpeed = 400f;
     [SerializeField] private float jumpHeight = 2f;
     [SerializeField] private float gravity = -20f;
 
