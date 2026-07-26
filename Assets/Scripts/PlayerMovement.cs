@@ -29,7 +29,21 @@ public class PlayerMovement : NetworkBehaviour
             Cursor.visible = false;
         }
     }
+    public override void OnNetworkSpawn()
+    {
+        if (!IsOwner)
+            return;
 
+        GameObject spawnPoint = GameObject.FindWithTag("PlayerSpawn");
+
+        if (spawnPoint != null)
+        {
+            transform.SetPositionAndRotation(
+                spawnPoint.transform.position,
+                spawnPoint.transform.rotation
+            );
+        }
+    }
     void Update()
     {
         if (!IsOwner) return;

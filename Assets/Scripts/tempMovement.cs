@@ -124,22 +124,22 @@ public class TemporaryRVMovement : NetworkBehaviour
         float movement = 0f;
         float steering = 0f;
 
-        if (Input.GetKey(KeyCode.I))
+        if (Input.GetKey(KeyCode.W))
         {
             movement = 1f;
         }
 
-        if (Input.GetKey(KeyCode.K))
+        if (Input.GetKey(KeyCode.S))
         {
             movement = -1f;
         }
 
-        if (Input.GetKey(KeyCode.J))
+        if (Input.GetKey(KeyCode.A))
         {
             steering = -1f;
         }
 
-        if (Input.GetKey(KeyCode.L))
+        if (Input.GetKey(KeyCode.D))
         {
             steering = 1f;
         }
