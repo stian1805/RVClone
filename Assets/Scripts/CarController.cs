@@ -30,6 +30,10 @@ public class CarController : NetworkBehaviour
     [Tooltip("Maximum forward speed in metres per second.")]
     [SerializeField] private float maximumSpeed = 30f;
 
+    [Tooltip("Minimum horizontal speed before the wheel models are allowed to spin.")]
+    [Min(0f)]
+    [SerializeField] private float wheelRotationSpeedThreshold = 0.05f;
+
     private Rigidbody carRigidbody;
 
     private bool hasDriver;
@@ -233,9 +237,19 @@ public class CarController : NetworkBehaviour
             out Quaternion wheelRotation
         );
 
-        visibleWheel.SetPositionAndRotation(
-            wheelPosition,
-            wheelRotation
-        );
+        // WheelCollider can report a tiny RPM while the car settles in place.
+        // Keep updating the suspension position, but ignore that visual spin
+        // until the car has moved far enough to be noticeable.
+        Vector3 horizontalVelocity = carRigidbody.linearVelocity;
+        horizontalVelocity.y = 0f;
+
+        if (horizontalVelocity.sqrMagnitude <
+            wheelRotationSpeedThreshold * wheelRotationSpeedThreshold)
+        {
+            visibleWheel.position = wheelPosition;
+            return;
+        }
+
+        visibleWheel.SetPositionAndRotation(wheelPosition, wheelRotation);
     }
 }
