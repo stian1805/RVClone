@@ -198,7 +198,7 @@ MonoBehaviour:
   jumpHeight: 2
   gravity: -20
   cameraPivot: {fileID: 2585825995130089999}
-  lookSpeed: 120
+  lookSpeed: 300
   minLookAngle: -80
   maxLookAngle: 80
 --- !u!114 &1407629494152795050
