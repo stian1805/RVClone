@@ -130,6 +130,8 @@ GameObject:
   - component: {fileID: 474393916694608356}
   - component: {fileID: -871206923105678399}
   - component: {fileID: 1701530583986713973}
+  - component: {fileID: -2324527728420051868}
+  - component: {fileID: -8614562018380054957}
   m_Layer: 0
   m_Name: BasicPlayer
   m_TagString: Untagged
@@ -166,7 +168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 1560835511
+  GlobalObjectIdHash: 2397348861
   InScenePlacedSourceGlobalObjectIdHash: 2397348861
   DeferredDespawnTick: 0
   Ownership: 1
@@ -323,6 +325,36 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   playerCamera: {fileID: 2834233610142443486}
   grabPoint: {fileID: 8630489513777360364}
+--- !u!114 &-2324527728420051868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2322886407857764359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d531dc37e400f284798b802abd92b777, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Inventory
+  numberOfSlots: 2
+  slots: []
+--- !u!114 &-8614562018380054957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2322886407857764359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a538b1458680c664aad5d519521ea1ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryTest
+  ShowTopMostFoldoutHeaderGroup: 1
+  inventory: {fileID: -2324527728420051868}
+  testItem: {fileID: 11400000, guid: 04e8e3006771b7a48b0b8671ea33e35e, type: 2}
+  amountToAdd: 1
 --- !u!1 &5750122374461597965
 GameObject:
   m_ObjectHideFlags: 0
