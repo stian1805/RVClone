@@ -6,14 +6,14 @@ public class PlayerMovement : NetworkBehaviour
     private CharacterController controller;
 
     [SerializeField] private float moveSpeed = 4f;
-    [SerializeField] private float turnSpeed = 400f;
+    [SerializeField] private float turnSpeed = 2000f;
     [SerializeField] private float jumpHeight = 2f;
     [SerializeField] private float gravity = -20f;
 
     private Vector3 velocity;
     
     [SerializeField] private Transform cameraPivot; // Assign your Camera or a pivot object
-    [SerializeField] private float lookSpeed = 300f;
+    [SerializeField] private float lookSpeed = 2000f;
     [SerializeField] private float minLookAngle = -80f;
     [SerializeField] private float maxLookAngle = 80f;
 

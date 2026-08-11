@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11e5a02c4d5ecc34d9a8df27678ec592, type: 3}
   m_Name: Fuel
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemId: fuel
   itemName: Fuel
   icon: {fileID: 0}
   maximumStackSize: 10

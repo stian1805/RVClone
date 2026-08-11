@@ -196,11 +196,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   ShowTopMostFoldoutHeaderGroup: 1
   moveSpeed: 5
-  turnSpeed: 60
+  turnSpeed: 1000
   jumpHeight: 2
   gravity: -20
   cameraPivot: {fileID: 2585825995130089999}
-  lookSpeed: 300
+  lookSpeed: 1000
   minLookAngle: -80
   maxLookAngle: 80
 --- !u!114 &1407629494152795050
@@ -337,7 +337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d531dc37e400f284798b802abd92b777, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Inventory
-  numberOfSlots: 2
+  numberOfSlots: 12
   slots: []
 --- !u!114 &-8614562018380054957
 MonoBehaviour:

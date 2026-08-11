@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11e5a02c4d5ecc34d9a8df27678ec592, type: 3}
   m_Name: Food
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemId: food
   itemName: Food
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: beb1d640f6c841945ad239f524a923c1, type: 3}
   maximumStackSize: 3
